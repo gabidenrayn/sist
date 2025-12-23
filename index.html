@@ -1,0 +1,3251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты по системному программированию</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .description {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        .test-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .test-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+        }
+        
+        .test-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: #4a6fa5;
+        }
+        
+        .test-card h3 {
+            color: #4a6fa5;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .test-card p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .test-card .test-number {
+            display: inline-block;
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .start-btn {
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(74, 111, 165, 0.4);
+        }
+        
+        .test-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+        }
+        
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .question-counter {
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(74, 111, 165, 0.3);
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-weight: 600;
+            line-height: 1.5;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #4a6fa5;
+        }
+        
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+        
+        .answer-option {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            border: 2px solid #e1e5eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            background: white;
+        }
+        
+        .answer-option:hover {
+            border-color: #4a6fa5;
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+        
+        .answer-option.selected {
+            border-color: #4a6fa5;
+            background-color: #e8f0fe;
+            box-shadow: 0 5px 15px rgba(74, 111, 165, 0.1);
+        }
+        
+        .answer-option.correct {
+            border-color: #4CAF50;
+            background-color: #e8f5e8;
+        }
+        
+        .answer-option.incorrect {
+            border-color: #f44336;
+            background-color: #ffebee;
+        }
+        
+        .answer-option input {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: #4a6fa5;
+        }
+        
+        .answer-feedback {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .feedback-correct {
+            background: linear-gradient(90deg, #e8f5e8, #d4edda);
+            border: 2px solid #4CAF50;
+            color: #2e7d32;
+        }
+        
+        .feedback-incorrect {
+            background: linear-gradient(90deg, #ffebee, #f8d7da);
+            border: 2px solid #f44336;
+            color: #c62828;
+        }
+        
+        .correct-answer {
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+        }
+        
+        .test-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(74, 111, 165, 0.3);
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(74, 111, 165, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .results-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+        }
+        
+        .results-container h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+        }
+        
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: conic-gradient(#4CAF50 0% var(--percentage), #f0f0f0 var(--percentage) 100%);
+            margin: 30px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: white;
+        }
+        
+        .score-text {
+            position: relative;
+            z-index: 1;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .result-details {
+            text-align: left;
+            max-width: 700px;
+            margin: 30px auto 40px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .result-details h3 {
+            color: #4a6fa5;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #4a6fa5;
+            padding-bottom: 10px;
+        }
+        
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a6fa5;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .result-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .result-btn {
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(74, 111, 165, 0.3);
+        }
+        
+        .result-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(74, 111, 165, 0.4);
+        }
+        
+        .result-btn.secondary {
+            background: linear-gradient(90deg, #6c757d, #495057);
+        }
+        
+        .result-btn.secondary:hover {
+            box-shadow: 0 6px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        .review-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .review-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .review-question-counter {
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(74, 111, 165, 0.3);
+        }
+        
+        .review-question {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-weight: 600;
+            line-height: 1.5;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #4a6fa5;
+        }
+        
+        .review-answers {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .review-answer-option {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            border: 2px solid #e1e5eb;
+            border-radius: 12px;
+            position: relative;
+            background: white;
+        }
+        
+        .review-answer-option.user-selected {
+            border-color: #4a6fa5;
+            background-color: #e8f0fe;
+        }
+        
+        .review-answer-option.correct-answer {
+            border-color: #4CAF50;
+            background-color: #e8f5e8;
+        }
+        
+        .review-answer-option.user-incorrect {
+            border-color: #f44336;
+            background-color: #ffebee;
+        }
+        
+        .answer-status {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .correct-icon {
+            color: #4CAF50;
+        }
+        
+        .incorrect-icon {
+            color: #f44336;
+        }
+        
+        .review-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value-live {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a6fa5;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label-live {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a6fa5, #764ba2);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .test-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-container, .results-container, .review-container {
+                padding: 25px;
+            }
+            
+            .test-controls, .review-controls, .result-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn, .result-btn {
+                width: 100%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .question, .review-question {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-laptop-code"></i> Тесты по системному программированию</h1>
+            <p class="description">Проверьте свои знания в области системного программирования, API Windows, ассемблера и обработки исключений. Каждый тест содержит 30 вопросов в случайном порядке с мгновенной проверкой ответов.</p>
+        </header>
+        
+        <div class="test-selector" id="testSelector">
+            <!-- Тесты будут сгенерированы скриптом -->
+        </div>
+        
+        <div class="test-container" id="testContainer">
+            <div class="test-header">
+                <h2 id="testTitle">Тест</h2>
+                <div class="question-counter">Вопрос <span id="currentQuestion">1</span> из <span id="totalQuestions">30</span></div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 3.33%;"></div>
+            </div>
+            
+            <div class="question" id="questionText">
+                Текст вопроса
+            </div>
+            
+            <div class="answers" id="answersContainer">
+                <!-- Варианты ответов будут сгенерированы скриптом -->
+            </div>
+            
+            <div class="answer-feedback" id="answerFeedback">
+                <!-- Здесь будет отображаться результат ответа -->
+            </div>
+            
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value-live" id="answeredCount">0</div>
+                    <div class="stat-label-live">Отвечено</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value-live" id="correctCountLive">0</div>
+                    <div class="stat-label-live">Правильно</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value-live" id="incorrectCountLive">0</div>
+                    <div class="stat-label-live">Неправильно</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value-live" id="accuracyRate">0%</div>
+                    <div class="stat-label-live">Точность</div>
+                </div>
+            </div>
+            
+            <div class="test-controls">
+                <button class="nav-btn" id="prevBtn" disabled><i class="fas fa-arrow-left"></i> Предыдущий</button>
+                <button class="nav-btn" id="nextBtn">Следующий <i class="fas fa-arrow-right"></i></button>
+                <button class="nav-btn" id="finishBtn" style="display: none;"><i class="fas fa-flag-checkered"></i> Завершить тест</button>
+            </div>
+        </div>
+        
+        <div class="results-container" id="resultsContainer">
+            <h2><i class="fas fa-chart-line"></i> Результаты теста</h2>
+            
+            <div class="score-circle" id="scoreCircle">
+                <div class="score-text" id="scoreText">0/30</div>
+            </div>
+            
+            <p id="resultMessage" style="font-size: 1.2rem; margin-bottom: 20px;"></p>
+            
+            <div class="result-details">
+                <h3><i class="fas fa-clipboard-list"></i> Статистика теста</h3>
+                
+                <div class="result-stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="correctCount">0</div>
+                        <div class="stat-label">Правильных ответов</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="incorrectCount">0</div>
+                        <div class="stat-label">Неправильных ответов</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="unansweredCount">0</div>
+                        <div class="stat-label">Без ответа</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="percentage">0%</div>
+                        <div class="stat-label">Процент правильных</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="result-buttons">
+                <button class="result-btn" id="reviewBtn"><i class="fas fa-search"></i> Просмотреть ответы</button>
+                <button class="result-btn secondary" id="restartBtn"><i class="fas fa-redo"></i> Новый тест</button>
+            </div>
+        </div>
+        
+        <div class="review-container" id="reviewContainer">
+            <div class="review-header">
+                <h2 id="reviewTitle">Просмотр ответов</h2>
+                <div class="review-question-counter">Вопрос <span id="reviewCurrentQuestion">1</span> из <span id="reviewTotalQuestions">30</span></div>
+            </div>
+            
+            <div class="review-question" id="reviewQuestionText">
+                Текст вопроса
+            </div>
+            
+            <div class="review-answers" id="reviewAnswersContainer">
+                <!-- Ответы для просмотра будут сгенерированы скриптом -->
+            </div>
+            
+            <div class="review-controls">
+                <button class="nav-btn" id="reviewPrevBtn" disabled><i class="fas fa-arrow-left"></i> Предыдущий</button>
+                <button class="nav-btn" id="reviewNextBtn">Следующий <i class="fas fa-arrow-right"></i></button>
+                <button class="nav-btn" id="reviewBackBtn"><i class="fas fa-arrow-left"></i> Назад к результатам</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Тесты по системному программированию &copy; 2023 | Все вопросы составлены на основе учебных материалов</p>
+        </div>
+    </div>
+
+    <script>
+        // Все вопросы из предоставленных данных
+        const allQuestions = [
+            // Тест 1: Основы системного программирования
+            {
+                question: "Что такое системное программирование?",
+                correct: 0,
+                variants: [
+                    "Создание программ, взаимодействующих с операционной системой",
+                    "Разработка офисных приложений",
+                    "Настройка компьютерных сетей",
+                    "Создание игр и мультимедиа",
+                    "Проектирование пользовательских интерфейсов"
+                ]
+            },
+            {
+                question: "Что является основной задачей системного программирования?",
+                correct: 0,
+                variants: [
+                    "Обеспечение взаимодействия прикладных программ с аппаратным обеспечением",
+                    "Разработка интернет-сайтов",
+                    "Создание мультимедийных приложений",
+                    "Проектирование пользовательских интерфейсов",
+                    "Редактирование текстов"
+                ]
+            },
+            {
+                question: "Что такое API в операционной системе?",
+                correct: 0,
+                variants: [
+                    "Интерфейс прикладного программирования",
+                    "Программное обеспечение для антивируса",
+                    "Аппаратный порт ввода-вывода",
+                    "Система контроля доступа",
+                    "Графическая оболочка ОС"
+                ]
+            },
+            {
+                question: "Что такое процесс в операционной системе?",
+                correct: 0,
+                variants: [
+                    "Программа, находящаяся в стадии выполнения",
+                    "Файл на диске",
+                    "Системная библиотека",
+                    "Виртуальное устройство",
+                    "Поток ввода-вывода"
+                ]
+            },
+            {
+                question: "Что такое поток",
+                correct: 0,
+                variants: [
+                    "Наименьшая единица выполнения внутри процесса",
+                    "Физический канал связи",
+                    "Секция кода программы",
+                    "Внешний файл",
+                    "Тип памяти"
+                ]
+            },
+            {
+                question: "Какой интерфейс отвечает за взаимодействие программ с ОС",
+                correct: 0,
+                variants: [
+                    "API",
+                    "DNS",
+                    "URL",
+                    "SQL",
+                    "HTML"
+                ]
+            },
+            {
+                question: "Что такое ABI",
+                correct: 0,
+                variants: [
+                    "Бинарный интерфейс приложения",
+                    "Алгоритм бинарной информации",
+                    "Автоматический буферный интерфейс",
+                    "Асинхронный базовый интерфейс",
+                    "Аналоговый базовый интегратор"
+                ]
+            },
+            {
+                question: "Что делает функция CreateProcess в Windows",
+                correct: 0,
+                variants: [
+                    "Создаёт новый процесс",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Останавливает ОС"
+                ]
+            },
+            {
+                question: "Что такое виртуальная память",
+                correct: 0,
+                variants: [
+                    "Механизм, позволяющий использовать больше памяти, чем доступно физически",
+                    "Постоянное хранилище данных",
+                    "Физический раздел жесткого диска",
+                    "Секция BIOS",
+                    "Файл настроек"
+                ]
+            },
+            {
+                question: "Что такое DLL",
+                correct: 0,
+                variants: [
+                    "Динамически подключаемая библиотека",
+                    "Драйвер устройства",
+                    "Системная переменная",
+                    "Файл данных",
+                    "Пакет обновлений"
+                ]
+            },
+            {
+                question: "Что делает функция Sleep() в Windows API",
+                correct: 0,
+                variants: [
+                    "Приостанавливает выполнение потока на заданное время",
+                    "Завершает процесс",
+                    "Очищает память",
+                    "Создаёт новый поток",
+                    "Выводит сообщение на экран"
+                ]
+            },
+            {
+                question: "Что делает функция WaitForSingleObject",
+                correct: 0,
+                variants: [
+                    "Ожидает завершения указанного объекта",
+                    "Создаёт новый поток",
+                    "Удаляет файл",
+                    "Запускает программу",
+                    "Сохраняет данные"
+                ]
+            },
+            {
+                question: "Что такое семафор",
+                correct: 0,
+                variants: [
+                    "Объект синхронизации потоков",
+                    "Функция работы с файлами",
+                    "Тип виртуальной памяти",
+                    "Сетевой протокол",
+                    "Команда компилятора"
+                ]
+            },
+            {
+                question: "Для чего используется мьютекс",
+                correct: 0,
+                variants: [
+                    "Для взаимного исключения потоков при доступе к общим данным",
+                    "Для обмена сообщениями",
+                    "Для хранения переменных окружения",
+                    "Для управления памятью",
+                    "Для передачи файлов"
+                ]
+            },
+            {
+                question: "Что делает функция CreateThread",
+                correct: 0,
+                variants: [
+                    "Создаёт новый поток выполнения",
+                    "Создаёт новый процесс",
+                    "Удаляет поток",
+                    "Перезапускает программу",
+                    "Закрывает окно"
+                ]
+            },
+            {
+                question: "Что такое дескриптор",
+                correct: 0,
+                variants: [
+                    "Уникальный идентификатор системного объекта",
+                    "Имя файла",
+                    "Тип данных",
+                    "Класс программы",
+                    "Путь к библиотеке"
+                ]
+            },
+            {
+                question: "Что делает функция CloseHandle",
+                correct: 0,
+                variants: [
+                    "Закрывает дескриптор объекта",
+                    "Очищает память",
+                    "Удаляет файл",
+                    "Создаёт поток",
+                    "Завершает процесс"
+                ]
+            },
+            {
+                question: "Что означает термин «асинхронный ввод-вывод»",
+                correct: 0,
+                variants: [
+                    "Операции выполняются независимо от основного потока",
+                    "Все операции выполняются последовательно",
+                    "Ввод-вывод невозможен",
+                    "Требуется блокировка потоков",
+                    "Только чтение данных"
+                ]
+            },
+            {
+                question: "Что делает функция ReadFile в Windows API",
+                correct: 0,
+                variants: [
+                    "Читает данные из файла",
+                    "Записывает данные в файл",
+                    "Создаёт новый файл",
+                    "Удаляет файл",
+                    "Переименовывает файл"
+                ]
+            },
+            {
+                question: "Что делает функция WriteFile",
+                correct: 0,
+                variants: [
+                    "Записывает данные в файл",
+                    "Читает данные из файла",
+                    "Создаёт процесс",
+                    "Удаляет каталог",
+                    "Закрывает поток"
+                ]
+            },
+            {
+                question: "Что означает термин 'критическая секция'",
+                correct: 0,
+                variants: [
+                    "Область кода, доступ к которой должен быть синхронизирован между потоками",
+                    "Ошибочный участок программы",
+                    "Секция данных в памяти",
+                    "Фрагмент интерфейса",
+                    "Раздел настроек ОС"
+                ]
+            },
+            {
+                question: "Что такое событие (Event) в Windows API",
+                correct: 0,
+                variants: [
+                    "Объект синхронизации, сигнализирующий о наступлении определённого состояния",
+                    "Прерывание оборудования",
+                    "Пользовательская команда",
+                    "Сетевой пакет",
+                    "Модуль ядра"
+                ]
+            },
+            {
+                question: "Что делает функция VirtualAlloc",
+                correct: 0,
+                variants: [
+                    "Выделяет область виртуальной памяти",
+                    "Удаляет файл",
+                    "Запускает процесс",
+                    "Создаёт поток",
+                    "Инициализирует событие"
+                ]
+            },
+            {
+                question: "Что делает функция VirtualFree",
+                correct: 0,
+                variants: [
+                    "Освобождает область виртуальной памяти",
+                    "Выделяет память",
+                    "Создаёт процесс",
+                    "Останавливает поток",
+                    "Удаляет файл"
+                ]
+            },
+            {
+                question: "Что делает функция GetLastError",
+                correct: 0,
+                variants: [
+                    "Возвращает код последней ошибки системы",
+                    "Очищает память",
+                    "Создаёт лог-файл",
+                    "Перезапускает процесс",
+                    "Закрывает программу"
+                ]
+            },
+            {
+                question: "Что делает функция OpenProcess",
+                correct: 0,
+                variants: [
+                    "Открывает доступ к существующему процессу",
+                    "Создаёт новый процесс",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Выделяет память"
+                ]
+            },
+            {
+                question: "Что делает функция TerminateProcess",
+                correct: 0,
+                variants: [
+                    "Принудительно завершает процесс",
+                    "Приостанавливает выполнение потока",
+                    "Очищает буфер",
+                    "Создаёт событие",
+                    "Закрывает файл"
+                ]
+            },
+            {
+                question: "Что делает функция CreateFile",
+                correct: 0,
+                variants: [
+                    "Создаёт или открывает файл или устройство",
+                    "Удаляет файл",
+                    "Копирует файл",
+                    "Закрывает поток",
+                    "Создаёт событие"
+                ]
+            },
+            {
+                question: "Что делает функция DeleteFile",
+                correct: 0,
+                variants: [
+                    "Удаляет файл с диска",
+                    "Создаёт файл",
+                    "Очищает память",
+                    "Закрывает поток",
+                    "Перезапускает программу"
+                ]
+            },
+            {
+                question: "Что делает функция GetFileSize",
+                correct: 0,
+                variants: [
+                    "Возвращает размер файла",
+                    "Создаёт файл",
+                    "Удаляет файл",
+                    "Изменяет атрибуты файла",
+                    "Читает поток"
+                ]
+            },
+            // Тест 2: Файловая система и работа с файлами
+            {
+                question: "Что делает функция MoveFile",
+                correct: 0,
+                variants: [
+                    "Перемещает или переименовывает файл",
+                    "Удаляет каталог",
+                    "Создаёт поток",
+                    "Закрывает процесс",
+                    "Выделяет память"
+                ]
+            },
+            {
+                question: "Что делает функция CopyFile",
+                correct: 0,
+                variants: [
+                    "Копирует файл на новый путь",
+                    "Удаляет файл",
+                    "Создаёт поток",
+                    "Очищает буфер",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что делает функция CreateSemaphore",
+                correct: 0,
+                variants: [
+                    "Создаёт объект семафора",
+                    "Удаляет поток",
+                    "Открывает файл",
+                    "Завершает процесс",
+                    "Создаёт DLL"
+                ]
+            },
+            {
+                question: "Что делает функция ReleaseSemaphore",
+                correct: 0,
+                variants: [
+                    "Освобождает семафор, увеличивая его счётчик",
+                    "Удаляет семафор",
+                    "Создаёт поток",
+                    "Перезапускает программу",
+                    "Выделяет память"
+                ]
+            },
+            {
+                question: "Что делает функция CreateMutex",
+                correct: 0,
+                variants: [
+                    "Создаёт объект мьютекса",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Открывает файл",
+                    "Запускает ОС"
+                ]
+            },
+            {
+                question: "Что делает функция ReleaseMutex",
+                correct: 0,
+                variants: [
+                    "Освобождает владение мьютексом",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает файл",
+                    "Создаёт событие"
+                ]
+            },
+            {
+                question: "Что такое дескриптор файла",
+                correct: 0,
+                variants: [
+                    "Идентификатор, указывающий на открытый файл",
+                    "Имя файла в системе",
+                    "Путь к каталогу",
+                    "Тип данных",
+                    "Формат архива"
+                ]
+            },
+            {
+                question: "Что делает функция SetFilePointer",
+                correct: 0,
+                variants: [
+                    "Изменяет позицию указателя чтения-записи файла",
+                    "Удаляет файл",
+                    "Копирует файл",
+                    "Создаёт процесс",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция FlushFileBuffers",
+                correct: 0,
+                variants: [
+                    "Записывает все буферизованные данные на диск",
+                    "Удаляет файл",
+                    "Создаёт поток",
+                    "Изменяет атрибуты файла",
+                    "Закрывает дескриптор"
+                ]
+            },
+            {
+                question: "Что такое файловая система",
+                correct: 0,
+                variants: [
+                    "Метод организации и хранения данных на носителях",
+                    "Тип процессора",
+                    "Сетевой протокол",
+                    "Графическая оболочка",
+                    "Программная библиотека"
+                ]
+            },
+            {
+                question: "Что делает функция CreateDirectory",
+                correct: 0,
+                variants: [
+                    "Создаёт новый каталог",
+                    "Удаляет каталог",
+                    "Копирует файл",
+                    "Открывает процесс",
+                    "Запускает поток"
+                ]
+            },
+            {
+                question: "Что делает функция RemoveDirectory",
+                correct: 0,
+                variants: [
+                    "Удаляет пустой каталог",
+                    "Создаёт новый каталог",
+                    "Закрывает поток",
+                    "Очищает память",
+                    "Создаёт файл"
+                ]
+            },
+            {
+                question: "Что делает функция GetCurrentDirectory",
+                correct: 0,
+                variants: [
+                    "Возвращает текущий рабочий каталог",
+                    "Удаляет каталог",
+                    "Создаёт процесс",
+                    "Закрывает файл",
+                    "Изменяет переменную окружения"
+                ]
+            },
+            {
+                question: "Что делает функция SetCurrentDirectory",
+                correct: 0,
+                variants: [
+                    "Изменяет текущий рабочий каталог",
+                    "Удаляет каталог",
+                    "Создаёт поток",
+                    "Копирует файл",
+                    "Закрывает процесс"
+                ]
+            },
+            {
+                question: "Что такое handle",
+                correct: 0,
+                variants: [
+                    "Указатель или идентификатор системного ресурса",
+                    "Имя переменной",
+                    "Формат изображения",
+                    "Библиотека функций",
+                    "Файл настроек"
+                ]
+            },
+            {
+                question: "Что такое thread-safe код",
+                correct: 0,
+                variants: [
+                    "Код, корректно работающий при многопоточном выполнении",
+                    "Код, работающий только в одном потоке",
+                    "Код, не требующий синхронизации",
+                    "Код, защищённый антивирусом",
+                    "Код, выполняющийся только в ядре"
+                ]
+            },
+            {
+                question: "Что означает синхронизация потоков",
+                correct: 0,
+                variants: [
+                    "Согласование доступа потоков к общим ресурсам",
+                    "Асинхронный ввод-вывод",
+                    "Задержка выполнения",
+                    "Оптимизация кода",
+                    "Разделение памяти"
+                ]
+            },
+            {
+                question: "Что делает функция EnterCriticalSection",
+                correct: 0,
+                variants: [
+                    "Входит в критическую секцию, блокируя доступ другим потокам",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция LeaveCriticalSection",
+                correct: 0,
+                variants: [
+                    "Выходит из критической секции",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Создаёт файл",
+                    "Закрывает программу"
+                ]
+            },
+            {
+                question: "Что делает функция InitializeCriticalSection",
+                correct: 0,
+                variants: [
+                    "Инициализирует объект критической секции",
+                    "Удаляет объект",
+                    "Создаёт процесс",
+                    "Копирует файл",
+                    "Закрывает поток"
+                ]
+            },
+            {
+                question: "Что делает функция DeleteCriticalSection",
+                correct: 0,
+                variants: [
+                    "Удаляет объект критической секции",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Перезапускает ОС",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция CreateEvent",
+                correct: 0,
+                variants: [
+                    "Создаёт объект события",
+                    "Удаляет поток",
+                    "Создаёт процесс",
+                    "Очищает память",
+                    "Создаёт каталог"
+                ]
+            },
+            {
+                question: "Что делает функция SetEvent",
+                correct: 0,
+                variants: [
+                    "Переводит событие в сигнальное состояние",
+                    "Удаляет событие",
+                    "Создаёт поток",
+                    "Очищает буфер",
+                    "Закрывает процесс"
+                ]
+            },
+            {
+                question: "Что делает функция ResetEvent",
+                correct: 0,
+                variants: [
+                    "Переводит событие в несигнальное состояние",
+                    "Удаляет событие",
+                    "Создаёт процесс",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция WaitForMultipleObjects",
+                correct: 0,
+                variants: [
+                    "Ожидает сигнал от одного или нескольких объектов",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Запускает программу",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что такое Deadlock",
+                correct: 0,
+                variants: [
+                    "Ситуация, когда процессы или потоки блокируют друг друга",
+                    "Переполнение стека",
+                    "Ошибка чтения файла",
+                    "Потеря данных в памяти",
+                    "Ошибка синтаксиса"
+                ]
+            },
+            {
+                question: "Что такое контекст процесса",
+                correct: 0,
+                variants: [
+                    "Набор данных, описывающих состояние процесса",
+                    "Файл настроек",
+                    "Библиотека DLL",
+                    "Тип памяти",
+                    "Сетевой адрес"
+                ]
+            },
+            {
+                question: "Что делает функция ExitProcess",
+                correct: 0,
+                variants: [
+                    "Завершает процесс и освобождает ресурсы",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Очищает память",
+                    "Запускает ОС"
+                ]
+            },
+            {
+                question: "Что делает функция ExitThread",
+                correct: 0,
+                variants: [
+                    "Завершает выполнение потока",
+                    "Создаёт процесс",
+                    "Удаляет файл",
+                    "Закрывает событие",
+                    "Перезапускает ОС"
+                ]
+            },
+            {
+                question: "Что делает функция SuspendThread",
+                correct: 0,
+                variants: [
+                    "Приостанавливает выполнение потока",
+                    "Удаляет поток",
+                    "Создаёт процесс",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция ResumeThread",
+                correct: 0,
+                variants: [
+                    "Возобновляет выполнение потока",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Очищает память",
+                    "Закрывает файл"
+                ]
+            },
+            {
+                question: "Что делает функция GetExitCodeThread",
+                correct: 0,
+                variants: [
+                    "Возвращает код завершения потока",
+                    "Удаляет поток",
+                    "Создаёт процесс",
+                    "Закрывает файл",
+                    "Перезапускает ОС"
+                ]
+            },
+            // Тест 3: Исключения и обработка ошибок
+            {
+                question: "Что делает функция GetExitCodeProcess",
+                correct: 0,
+                variants: [
+                    "Возвращает код завершения процесса",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Очищает память",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что такое исключение (exception)",
+                correct: 0,
+                variants: [
+                    "Событие, возникающее при ошибке выполнения программы",
+                    "Тип данных",
+                    "Процесс ввода-вывода",
+                    "Команда компилятора",
+                    "Библиотека функций"
+                ]
+            },
+            {
+                question: "Что делает функция RaiseException",
+                correct: 0,
+                variants: [
+                    "Создаёт программное исключение",
+                    "Удаляет файл",
+                    "Создаёт процесс",
+                    "Закрывает поток",
+                    "Инициализирует память"
+                ]
+            },
+            {
+                question: "Что делает обработчик исключений",
+                correct: 0,
+                variants: [
+                    "Перехватывает и обрабатывает ошибки выполнения",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Закрывает файл",
+                    "Копирует память"
+                ]
+            },
+            {
+                question: "Что делает функция SetUnhandledExceptionFilter",
+                correct: 0,
+                variants: [
+                    "Устанавливает обработчик необработанных исключений",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает событие",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что такое асинхронный вызов",
+                correct: 0,
+                variants: [
+                    "Вызов функции, не блокирующий основной поток выполнения",
+                    "Последовательный вызов функции",
+                    "Ошибка компиляции",
+                    "Синхронный обмен",
+                    "Ожидание завершения"
+                ]
+            },
+            {
+                question: "Что делает функция LoadLibrary",
+                correct: 0,
+                variants: [
+                    "Загружает динамическую библиотеку в память",
+                    "Создаёт библиотеку",
+                    "Удаляет DLL",
+                    "Закрывает процесс",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция GetProcAddress",
+                correct: 0,
+                variants: [
+                    "Возвращает адрес функции в загруженной библиотеке",
+                    "Удаляет библиотеку",
+                    "Создаёт поток",
+                    "Очищает буфер",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что делает функция FreeLibrary",
+                correct: 0,
+                variants: [
+                    "Выгружает динамическую библиотеку из памяти",
+                    "Загружает DLL",
+                    "Создаёт процесс",
+                    "Закрывает поток",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что такое консольное приложение",
+                correct: 0,
+                variants: [
+                    "Программа с текстовым интерфейсом без графики",
+                    "Игровое приложение",
+                    "Сетевой сервер",
+                    "Драйвер устройства",
+                    "Графический интерфейс"
+                ]
+            },
+            {
+                question: "Что делает функция GetStdHandle",
+                correct: 0,
+                variants: [
+                    "Возвращает дескриптор стандартного устройства ввода-вывода",
+                    "Удаляет файл",
+                    "Создаёт процесс",
+                    "Закрывает поток",
+                    "Перезапускает ОС"
+                ]
+            },
+            {
+                question: "Что делает функция ReadConsole",
+                correct: 0,
+                variants: [
+                    "Считывает данные из консоли",
+                    "Записывает данные в консоль",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция WriteConsole",
+                correct: 0,
+                variants: [
+                    "Выводит текст на консоль",
+                    "Читает файл",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Копирует данные"
+                ]
+            },
+            {
+                question: "Что такое системный вызов",
+                correct: 0,
+                variants: [
+                    "Функция, обеспечивающая взаимодействие программы с ядром ОС",
+                    "Команда компилятора",
+                    "Процесс запуска BIOS",
+                    "Служба печати",
+                    "Графический интерфейс"
+                ]
+            },
+            {
+                question: "Что делает функция CreateProcessAsUser",
+                correct: 0,
+                variants: [
+                    "Создаёт процесс от имени другого пользователя",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Перезапускает систему"
+                ]
+            },
+            {
+                question: "Что делает функцию GetCurrentProcess",
+                correct: 0,
+                variants: [
+                    "Возвращает дескриптор текущего процесса",
+                    "Создаёт новый процесс",
+                    "Удаляет поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция GetCurrentThread",
+                correct: 0,
+                variants: [
+                    "Возвращает дескриптор текущего потока",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Закрывает файл",
+                    "Перезапускает ОС"
+                ]
+            },
+            {
+                question: "Что делает функцию GetThreadPriority",
+                correct: 0,
+                variants: [
+                    "Возвращает приоритет потока",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Изменяет память",
+                    "Закрывает файл"
+                ]
+            },
+            {
+                question: "Что делает функцию SetThreadPriority",
+                correct: 0,
+                variants: [
+                    "Изменяет приоритет потока",
+                    "Удаляет поток",
+                    "Создаёт процесс",
+                    "Очищает память",
+                    "Запускает ОС"
+                ]
+            },
+            {
+                question: "Что делает функцию SetProcessAffinityMask",
+                correct: 0,
+                variants: [
+                    "Назначает процессу ядра процессора, на которых он может выполняться",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что такое ядро операционной системы",
+                correct: 0,
+                variants: [
+                    "Главная часть ОС, управляющая ресурсами компьютера",
+                    "Пакет драйверов",
+                    "Графическая оболочка",
+                    "Библиотека функций",
+                    "Виртуальный диск"
+                ]
+            },
+            {
+                question: "Что делает функция GetTickCount",
+                correct: 0,
+                variants: [
+                    "Возвращает количество миллисекунд с момента запуска системы",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция SleepEx",
+                correct: 0,
+                variants: [
+                    "Приостанавливает выполнение потока с возможностью асинхронного пробуждения",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Запускает ОС",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция SwitchToThread",
+                correct: 0,
+                variants: [
+                    "Передаёт управление другому готовому потоку",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функция DuplicateHandle",
+                correct: 0,
+                variants: [
+                    "Создаёт дубликат существующего дескриптора",
+                    "Удаляет дескриптор",
+                    "Создаёт процесс",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetProcessId",
+                correct: 0,
+                variants: [
+                    "Возвращает идентификатор процесса",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает событие",
+                    "Перезапускает ОС"
+                ]
+            },
+            {
+                question: "Что делает функцию GetThreadId",
+                correct: 0,
+                variants: [
+                    "Возвращает идентификатор потока",
+                    "Удаляет поток",
+                    "Создаёт процесс",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию CreatePipe",
+                correct: 0,
+                variants: [
+                    "Создаёт канал для обмена данными между процессами",
+                    "Создаёт файл",
+                    "Удаляет поток",
+                    "Закрывает каталог",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию ConnectNamedPipe",
+                correct: 0,
+                variants: [
+                    "Подключает клиент к именованному каналу",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию ReadPipe",
+                correct: 0,
+                variants: [
+                    "Читает данные из канала",
+                    "Записывает данные",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Очищает память"
+                ]
+            },
+            // Тест 4: Межпроцессное взаимодействие
+            {
+                question: "Что делает функцию WritePipe",
+                correct: 0,
+                variants: [
+                    "Записывает данные в канал",
+                    "Читает данные",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что делает функцию PeekNamedPipe",
+                correct: 0,
+                variants: [
+                    "Просматривает данные в канале без удаления из буфера",
+                    "Удаляет данные",
+                    "Создаёт процесс",
+                    "Закрывает поток",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию DisconnectNamedPipe",
+                correct: 0,
+                variants: [
+                    "Разрывает соединение именованного канала",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает файл",
+                    "Перезапускает ОС"
+                ]
+            },
+            {
+                question: "Что такое межпроцессное взаимодействие (IPC)",
+                correct: 0,
+                variants: [
+                    "Обмен данными между процессами",
+                    "Передача данных через сеть",
+                    "Работа с файлами",
+                    "Настройка BIOS",
+                    "Управление памятью"
+                ]
+            },
+            {
+                question: "Что делает функцию MapViewOfFile",
+                correct: 0,
+                variants: [
+                    "Отображает файл в адресное пространство процесса",
+                    "Удаляет файл",
+                    "Создаёт процесс",
+                    "Закрывает поток",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию UnmapViewOfFile",
+                correct: 0,
+                variants: [
+                    "Удаляет отображение файла из памяти",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает событие",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию CreateFileMapping",
+                correct: 0,
+                variants: [
+                    "Создаёт объект отображения файла в память",
+                    "Создаёт файл",
+                    "Удаляет поток",
+                    "Закрывает каталог",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию CreateTimerQueueTimer",
+                correct: 0,
+                variants: [
+                    "Создаёт таймер, вызывающий заданную функцию по расписанию",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию DeleteTimerQueueTimer",
+                correct: 0,
+                variants: [
+                    "Удаляет таймер из очереди",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetSystemTime",
+                correct: 0,
+                variants: [
+                    "Возвращает текущее системное время",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает событие",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию SetSystemTime",
+                correct: 0,
+                variants: [
+                    "Изменяет системное время",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию QueryPerformanceCounter",
+                correct: 0,
+                variants: [
+                    "Возвращает текущее значение высокоточного таймера",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Очищает память",
+                    "Закрывает файл"
+                ]
+            },
+            {
+                question: "Что делает функцию QueryPerformanceFrequency",
+                correct: 0,
+                variants: [
+                    "Возвращает частоту высокоточного таймера",
+                    "Удаляет поток",
+                    "Создаёт процесс",
+                    "Закрывает событие",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GlobalAlloc",
+                correct: 0,
+                variants: [
+                    "Выделяет глобальную память",
+                    "Удаляет память",
+                    "Создаёт процесс",
+                    "Закрывает файл",
+                    "Очищает буфер"
+                ]
+            },
+            {
+                question: "Что делает функцию GlobalFree",
+                correct: 0,
+                variants: [
+                    "Освобождает глобальную память",
+                    "Выделяет память",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что делает функцию HeapAlloc",
+                correct: 0,
+                variants: [
+                    "Выделяет память из кучи",
+                    "Удаляет память",
+                    "Создаёт процесс",
+                    "Закрывает поток",
+                    "Очищает буфер"
+                ]
+            },
+            {
+                question: "Что делает функцию HeapFree",
+                correct: 0,
+                variants: [
+                    "Освобождает память, выделенную из кучи",
+                    "Выделяет память",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что делает функцию LocalAlloc",
+                correct: 0,
+                variants: [
+                    "Выделяет локальную память",
+                    "Удаляет память",
+                    "Создаёт процесс",
+                    "Закрывает поток",
+                    "Очищает буфер"
+                ]
+            },
+            {
+                question: "Что делает функцию LocalFree",
+                correct: 0,
+                variants: [
+                    "Освобождает локальную память",
+                    "Выделяет память",
+                    "Создаёт поток",
+                    "Удаляет процесс",
+                    "Закрывает событие"
+                ]
+            },
+            {
+                question: "Что делает функцию GetModuleHandle",
+                correct: 0,
+                variants: [
+                    "Возвращает дескриптор загруженного модуля",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetCommandLine",
+                correct: 0,
+                variants: [
+                    "Возвращает командную строку текущего процесса",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetEnvironmentVariable",
+                correct: 0,
+                variants: [
+                    "Возвращает значение переменной окружения",
+                    "Создаёт процесс",
+                    "Удаляет поток",
+                    "Закрывает событие",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию SetEnvironmentVariable",
+                correct: 0,
+                variants: [
+                    "Изменяет значение переменной окружения",
+                    "Удаляет переменную",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetVersionEx",
+                correct: 0,
+                variants: [
+                    "Возвращает информацию о версии операционной системы",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает событие",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetSystemInfo",
+                correct: 0,
+                variants: [
+                    "Возвращает информацию о конфигурации системы",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetLogicalProcessorInformation",
+                correct: 0,
+                variants: [
+                    "Возвращает сведения о логических процессорах",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetProcessTimes",
+                correct: 0,
+                variants: [
+                    "Возвращает время работы процесса",
+                    "Удаляет процесс",
+                    "Создаёт поток",
+                    "Закрывает файл",
+                    "Очищает память"
+                ]
+            },
+            {
+                question: "Что делает функцию GetThreadTimes",
+                correct: 0,
+                variants: [
+                    "Возвращает время работы потока",
+                    "Удаляет поток",
+                    "Создаёт процесс",
+                    "Закрывает событие",
+                    "Очищает память"
+                ]
+            },
+            // Тест 5: Ассемблер и низкоуровневое программирование
+            {
+                question: "Что представляет собой массив в учебной ЦВМ",
+                correct: 0,
+                variants: [
+                    "Набор однотипных элементов, расположенных последовательно в памяти",
+                    "Набор случайных данных",
+                    "Единичная переменная",
+                    "Текстовый файл",
+                    "Регистровая команда"
+                ]
+            },
+            {
+                question: "Как определяется адрес элемента массива",
+                correct: 0,
+                variants: [
+                    "Адрес начала массива плюс смещение, зависящее от номера элемента",
+                    "Фиксированный адрес",
+                    "Регистр общего назначения",
+                    "Случайное значение",
+                    "Команда MOV"
+                ]
+            },
+            {
+                question: "Какая команда используется для пересылки данных",
+                correct: 0,
+                variants: [
+                    "MOV",
+                    "ADD",
+                    "SUB",
+                    "JMP",
+                    "PUSH"
+                ]
+            },
+            {
+                question: "Какая команда используется для сложения",
+                correct: 0,
+                variants: [
+                    "ADD",
+                    "SUB",
+                    "MOV",
+                    "INC",
+                    "JNZ"
+                ]
+            },
+            {
+                question: "Какой регистр часто используется как счётчик цикла",
+                correct: 0,
+                variants: [
+                    "CX",
+                    "AX",
+                    "BX",
+                    "DX",
+                    "SI"
+                ]
+            },
+            {
+                question: "Как обозначается начало программы",
+                correct: 0,
+                variants: [
+                    "ORG",
+                    "END",
+                    "DATA",
+                    "CODE",
+                    "MOV"
+                ]
+            },
+            {
+                question: "Что делает команда LOOP",
+                correct: 0,
+                variants: [
+                    "Уменьшает CX и переходит по метке, если CX ≠ 0",
+                    "Завершает программу",
+                    "Создаёт подпрограмму",
+                    "Копирует память",
+                    "Удаляет данные"
+                ]
+            },
+            {
+                question: "Какой тип адресации используется при работе с массивами",
+                correct: 0,
+                variants: [
+                    "Косвенная адресация через регистр",
+                    "Прямая адресация",
+                    "Непрямая через стек",
+                    "Абсолютная",
+                    "По имени переменной"
+                ]
+            },
+            {
+                question: "Какой сегмент хранит данные программы",
+                correct: 0,
+                variants: [
+                    "DS",
+                    "CS",
+                    "SS",
+                    "ES",
+                    "FS"
+                ]
+            },
+            {
+                question: "Что делает команда MOV AX, [BX]",
+                correct: 0,
+                variants: [
+                    "Загружает в AX значение по адресу BX",
+                    "Сохраняет BX в AX",
+                    "Перемещает адрес BX в память",
+                    "Очищает AX",
+                    "Сравнивает регистры"
+                ]
+            },
+            {
+                question: "Что делает команда CMP",
+                correct: 0,
+                variants: [
+                    "Сравнивает два операнда",
+                    "Складывает значения",
+                    "Умножает числа",
+                    "Завершает программу",
+                    "Переходит к метке"
+                ]
+            },
+            {
+                question: "Как обозначается конец программы",
+                correct: 0,
+                variants: [
+                    "END",
+                    "EXIT",
+                    "STOP",
+                    "JMP",
+                    "CALL"
+                ]
+            },
+            {
+                question: "Что делает команда INC",
+                correct: 0,
+                variants: [
+                    "Увеличивает значение на 1",
+                    "Уменьшает значение на 1",
+                    "Очищает регистр",
+                    "Сравнивает операнды",
+                    "Переходит по метке"
+                ]
+            },
+            {
+                question: "Что делает команда DEC",
+                correct: 0,
+                variants: [
+                    "Уменьшает значение на 1",
+                    "Увеличивает значение на 1",
+                    "Пересылает данные",
+                    "Очищает память",
+                    "Переходит по адресу"
+                ]
+            },
+            {
+                question: "Какой тип данных чаще всего используется в массивах учебной ЦВМ",
+                correct: 0,
+                variants: [
+                    "Целочисленный (байт или слово)",
+                    "Текстовый",
+                    "Символьный",
+                    "Логический",
+                    "Плавающая точка"
+                ]
+            },
+            {
+                question: "Что такое подпрограмма",
+                correct: 0,
+                variants: [
+                    "Блок кода, выполняющий определённую функцию и вызываемый из основной программы",
+                    "Основной цикл программы",
+                    "Файл данных",
+                    "Системная команда",
+                    "Метка перехода"
+                ]
+            },
+            {
+                question: "Какая команда используется для вызова подпрограммы",
+                correct: 0,
+                variants: [
+                    "CALL",
+                    "RET",
+                    "JMP",
+                    "MOV",
+                    "ORG"
+                ]
+            },
+            {
+                question: "Какая команда используется для возврата из подпрограммы",
+                correct: 0,
+                variants: [
+                    "RET",
+                    "CALL",
+                    "JMP",
+                    "END",
+                    "CMP"
+                ]
+            },
+            {
+                question: "Что сохраняется при вызове подпрограммы",
+                correct: 0,
+                variants: [
+                    "Адрес возврата",
+                    "Содержимое регистра AX",
+                    "Код ошибки",
+                    "Флаг нуля",
+                    "Метка данных"
+                ]
+            },
+            {
+                question: "Что делает команда PUSH",
+                correct: 0,
+                variants: [
+                    "Заносит значение в стек",
+                    "Извлекает значение из стека",
+                    "Создаёт подпрограмму",
+                    "Очищает память",
+                    "Закрывает цикл"
+                ]
+            },
+            {
+                question: "Что делает команда POP",
+                correct: 0,
+                variants: [
+                    "Извлекает значение из стека",
+                    "Заносит значение в стек",
+                    "Создаёт подпрограмму",
+                    "Очищает память",
+                    "Закрывает цикл"
+                ]
+            },
+            {
+                question: "Какой сегмент связан со стеком",
+                correct: 0,
+                variants: [
+                    "SS",
+                    "CS",
+                    "DS",
+                    "ES",
+                    "GS"
+                ]
+            },
+            {
+                question: "Какой регистр указывает вершину стека",
+                correct: 0,
+                variants: [
+                    "SP",
+                    "AX",
+                    "BX",
+                    "CX",
+                    "DX"
+                ]
+            },
+            {
+                question: "Что делает команда JMP",
+                correct: 0,
+                variants: [
+                    "Безусловно передаёт управление по указанному адресу",
+                    "Сохраняет данные",
+                    "Выполняет сравнение",
+                    "Создаёт стек",
+                    "Закрывает процесс"
+                ]
+            },
+            {
+                question: "Какое преимущество использования подпрограмм",
+                correct: 0,
+                variants: [
+                    "Повторное использование кода и структурированность программы",
+                    "Увеличение объёма памяти",
+                    "Ускорение компиляции",
+                    "Удаление ошибки",
+                    "Сокращение комментариев"
+                ]
+            },
+            {
+                question: "Что происходит при выполнении CALL",
+                correct: 0,
+                variants: [
+                    "Адрес следующей команды помещается в стек",
+                    "Удаляются данные",
+                    "Очищается стек",
+                    "Создаётся метка",
+                    "Устанавливается флаг"
+                ]
+            },
+            {
+                question: "Что делает команда RET",
+                correct: 0,
+                variants: [
+                    "Извлекает адрес из стека и передаёт управление обратно",
+                    "Создаёт стек",
+                    "Удаляет стек",
+                    "Завершает программу",
+                    "Переходит на начало"
+                ]
+            },
+            {
+                question: "Что обозначает метка процедуры PROC",
+                correct: 0,
+                variants: [
+                    "Начало подпрограммы",
+                    "Конец программы",
+                    "Начало данных",
+                    "Комментарий",
+                    "Вызов прерывания"
+                ]
+            },
+            {
+                question: "Что обозначает метка ENDP",
+                correct: 0,
+                variants: [
+                    "Конец подпрограммы",
+                    "Начало данных",
+                    "Метка цикла",
+                    "Вывод на экран",
+                    "Создание сегмента"
+                ]
+            },
+            {
+                question: "Что делает стек при работе с подпрограммами",
+                correct: 0,
+                variants: [
+                    "Хранит адреса возврата и временные данные",
+                    "Хранит текстовые строки",
+                    "Удаляет регистры",
+                    "Создаёт массивы",
+                    "Сохраняет сегменты данных"
+                ]
+            },
+            {
+                question: "Какой регистр чаще используется как индекс массива в x86",
+                correct: 0,
+                variants: [
+                    "SI",
+                    "AX",
+                    "BP",
+                    "CX",
+                    "DX"
+                ]
+            },
+            // Тест 6: Прерывания и системные вызовы
+            {
+                question: "Какой регистр хранит адрес сегмента данных",
+                correct: 0,
+                variants: [
+                    "DS",
+                    "CS",
+                    "SS",
+                    "ES",
+                    "FS"
+                ]
+            },
+            {
+                question: "Какую роль выполняет команда MOV AL, [BX+SI]",
+                correct: 0,
+                variants: [
+                    "Загружает байт из памяти по адресу BX+SI в AL",
+                    "Сохраняет значение AL в память",
+                    "Удаляет байт из памяти",
+                    "Обнуляет регистр SI",
+                    "Передаёт управление по адресу"
+                ]
+            },
+            {
+                question: "Какой тип адресации используется в выражении [BX+SI]",
+                correct: 0,
+                variants: [
+                    "Базово-индексная",
+                    "Непрямая",
+                    "Прямая",
+                    "Абсолютная",
+                    "Сегментная"
+                ]
+            },
+            {
+                question: "Что делает команда XLAT",
+                correct: 0,
+                variants: [
+                    "Преобразует байт из таблицы по индексу AL",
+                    "Переводит код в ASCII",
+                    "Сравнивает байты",
+                    "Удаляет таблицу",
+                    "Копирует память"
+                ]
+            },
+            {
+                question: "Что делает команда LEA",
+                correct: 0,
+                variants: [
+                    "Загружает в регистр эффективный адрес операнда",
+                    "Перемещает данные",
+                    "Сравнивает значения",
+                    "Удаляет память",
+                    "Сохраняет стек"
+                ]
+            },
+            {
+                question: "Что делает команда SCASB",
+                correct: 0,
+                variants: [
+                    "Сканирует байт в строке на совпадение с AL",
+                    "Удаляет строку",
+                    "Пересылает данные",
+                    "Сравнивает числа",
+                    "Создаёт массив"
+                ]
+            },
+            {
+                question: "Что делает команда LODSB",
+                correct: 0,
+                variants: [
+                    "Загружает байт из [SI] в AL и увеличивает SI",
+                    "Удаляет байт",
+                    "Пересылает строку",
+                    "Сохраняет AX",
+                    "Создаёт стек"
+                ]
+            },
+            {
+                question: "Что делает команда STOSB",
+                correct: 0,
+                variants: [
+                    "Сохраняет байт из AL по адресу [DI] и увеличивает DI",
+                    "Удаляет данные",
+                    "Загружает байт в AL",
+                    "Копирует сегмент",
+                    "Обнуляет память"
+                ]
+            },
+            {
+                question: "Что делает команда REP",
+                correct: 0,
+                variants: [
+                    "Повторяет следующую команду, пока CX ≠ 0",
+                    "Удаляет процесс",
+                    "Создаёт подпрограмму",
+                    "Закрывает файл",
+                    "Обнуляет память"
+                ]
+            },
+            {
+                question: "Что делает команда MOVSB",
+                correct: 0,
+                variants: [
+                    "Копирует байт из [SI] в [DI]",
+                    "Удаляет строку",
+                    "Создаёт стек",
+                    "Сравнивает байты",
+                    "Закрывает поток"
+                ]
+            },
+            {
+                question: "Что делает команда CLD",
+                correct: 0,
+                variants: [
+                    "Очищает флаг направления (DF=0)",
+                    "Устанавливает флаг DF",
+                    "Обнуляет память",
+                    "Удаляет процесс",
+                    "Создаёт стек"
+                ]
+            },
+            {
+                question: "Что делает команда STD",
+                correct: 0,
+                variants: [
+                    "Устанавливает флаг направления (DF=1)",
+                    "Очищает память",
+                    "Удаляет стек",
+                    "Создаёт подпрограмму",
+                    "Сохраняет AX"
+                ]
+            },
+            {
+                question: "Что делает команда CMPB",
+                correct: 0,
+                variants: [
+                    "Сравнивает байты в памяти",
+                    "Копирует память",
+                    "Создаёт стек",
+                    "Удаляет байты",
+                    "Сохраняет AX"
+                ]
+            },
+            {
+                question: "Какой сегмент используется при копировании данных в x86",
+                correct: 0,
+                variants: [
+                    "DS и ES",
+                    "CS и DS",
+                    "SS и DS",
+                    "FS и GS",
+                    "Только DS"
+                ]
+            },
+            {
+                question: "Какая команда вызывает подпрограмму",
+                correct: 0,
+                variants: [
+                    "CALL",
+                    "RET",
+                    "JMP",
+                    "MOV",
+                    "ADD"
+                ]
+            },
+            {
+                question: "Что делает команда RET",
+                correct: 0,
+                variants: [
+                    "Возвращает управление по адресу из стека",
+                    "Переходит по метке",
+                    "Создаёт подпрограмму",
+                    "Очищает память",
+                    "Сохраняет AX"
+                ]
+            },
+            {
+                question: "Какой регистр указывает вершину стека",
+                correct: 0,
+                variants: [
+                    "SP",
+                    "AX",
+                    "BX",
+                    "CX",
+                    "BP"
+                ]
+            },
+            {
+                question: "Что делает команда PUSH AX",
+                correct: 0,
+                variants: [
+                    "Сохраняет значение AX в стек",
+                    "Извлекает AX из стека",
+                    "Создаёт стек",
+                    "Удаляет данные",
+                    "Сравнивает регистры"
+                ]
+            },
+            {
+                question: "Что делает команда POP AX",
+                correct: 0,
+                variants: [
+                    "Извлекает значение из стека в AX",
+                    "Сохраняет AX в стек",
+                    "Удаляет память",
+                    "Создаёт стек",
+                    "Переходит по адресу"
+                ]
+            },
+            {
+                question: "Что сохраняется в стеке при вызове CALL",
+                correct: 0,
+                variants: [
+                    "Адрес возврата",
+                    "Код подпрограммы",
+                    "Имя метки",
+                    "Значение регистра BX",
+                    "Номер сегмента"
+                ]
+            },
+            {
+                question: "Какой сегмент используется стеком",
+                correct: 0,
+                variants: [
+                    "SS",
+                    "DS",
+                    "CS",
+                    "ES",
+                    "FS"
+                ]
+            },
+            {
+                question: "Что делает команда ENTER",
+                correct: 0,
+                variants: [
+                    "Создаёт стековый фрейм для подпрограммы",
+                    "Удаляет подпрограмму",
+                    "Завершает программу",
+                    "Копирует данные",
+                    "Сравнивает числа"
+                ]
+            },
+            {
+                question: "Что делает команда LEAVE",
+                correct: 0,
+                variants: [
+                    "Восстанавливает стек и выходит из подпрограммы",
+                    "Создаёт стек",
+                    "Очищает память",
+                    "Удаляет процесс",
+                    "Сравнивает регистры"
+                ]
+            },
+            {
+                question: "Что делает команда JMP FAR PTR",
+                correct: 0,
+                variants: [
+                    "Переходит на другой сегмент",
+                    "Переходит внутри текущего сегмента",
+                    "Создаёт стек",
+                    "Удаляет память",
+                    "Сохраняет AX"
+                ]
+            },
+            {
+                question: "Что делает команда INT",
+                correct: 0,
+                variants: [
+                    "Вызывает программное прерывание",
+                    "Завершает программу",
+                    "Создаёт стек",
+                    "Удаляет память",
+                    "Переходит по адресу"
+                ]
+            },
+            {
+                question: "Что делает команда IRET",
+                correct: 0,
+                variants: [
+                    "Возвращает управление после прерывания",
+                    "Завершает процесс",
+                    "Удаляет стек",
+                    "Очищает память",
+                    "Создаёт фрейм"
+                ]
+            },
+            {
+                question: "Какая команда используется для условного возврата",
+                correct: 0,
+                variants: [
+                    "RETZ",
+                    "RETN",
+                    "CALL",
+                    "JMP",
+                    "MOV"
+                ]
+            },
+            {
+                question: "Что делает команда PUSHA",
+                correct: 0,
+                variants: [
+                    "Сохраняет все регистры общего назначения в стек",
+                    "Сохраняет только AX",
+                    "Удаляет память",
+                    "Создаёт стек",
+                    "Сравнивает регистры"
+                ]
+            },
+            {
+                question: "Что делает команда POPA",
+                correct: 0,
+                variants: [
+                    "Извлекает все регистры из стека",
+                    "Удаляет стек",
+                    "Сохраняет AX",
+                    "Очищает память",
+                    "Создаёт процесс"
+                ]
+            },
+            {
+                question: "Что такое inline-assembler",
+                correct: 0,
+                variants: [
+                    "Встроенный ассемблерный код внутри программы на языке высокого уровня",
+                    "Отдельный файл с ассемблером",
+                    "Отладчик",
+                    "Интерпретатор",
+                    "Компилятор"
+                ]
+            }
+        ];
+
+        // Функция для перемешивания массива (алгоритм Фишера-Йетса)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Генерируем тесты по 30 вопросов в каждом
+        function generateTests() {
+            const tests = [];
+            const shuffledQuestions = shuffleArray([...allQuestions]);
+            
+            // Создаем 6 тестов по 30 вопросов каждый
+            const totalTests = 6;
+            const questionsPerTest = 30;
+            
+            for (let i = 0; i < totalTests; i++) {
+                const startIndex = i * questionsPerTest;
+                const endIndex = startIndex + questionsPerTest;
+                let testQuestions;
+                
+                // Если вопросов недостаточно, берем все оставшиеся
+                if (startIndex >= shuffledQuestions.length) {
+                    break;
+                } else if (endIndex > shuffledQuestions.length) {
+                    testQuestions = shuffledQuestions.slice(startIndex);
+                } else {
+                    testQuestions = shuffledQuestions.slice(startIndex, endIndex);
+                }
+                
+                // Перемешиваем варианты ответов для каждого вопроса
+                testQuestions.forEach(question => {
+                    // Сохраняем текст правильного ответа
+                    const correctAnswer = question.variants[question.correct];
+                    
+                    // Перемешиваем варианты
+                    question.shuffledVariants = shuffleArray([...question.variants]);
+                    
+                    // Находим новый индекс правильного ответа
+                    question.shuffledCorrect = question.shuffledVariants.indexOf(correctAnswer);
+                });
+                
+                const testNames = [
+                    "Основы системного программирования",
+                    "Файловая система и работа с файлами",
+                    "Исключения и обработка ошибок",
+                    "Межпроцессное взаимодействие",
+                    "Ассемблер и низкоуровневое программирование",
+                    "Прерывания и системные вызовы"
+                ];
+                
+                tests.push({
+                    id: i + 1,
+                    title: `Тест ${i + 1}: ${testNames[i] || "Системное программирование"}`,
+                    description: `30 вопросов по теме: ${testNames[i] || "Системное программирование"}. Мгновенная проверка ответов и подробный разбор после завершения.`,
+                    questions: testQuestions
+                });
+            }
+            
+            return tests;
+        }
+
+        // Глобальные переменные для управления тестом
+        let currentTest = null;
+        let currentQuestionIndex = 0;
+        let reviewQuestionIndex = 0;
+        let userAnswers = [];
+        let tests = [];
+        let userResults = [];
+
+        // Инициализация приложения
+        document.addEventListener('DOMContentLoaded', function() {
+            tests = generateTests();
+            renderTestSelection();
+            
+            // Назначение обработчиков событий
+            document.getElementById('prevBtn').addEventListener('click', showPreviousQuestion);
+            document.getElementById('nextBtn').addEventListener('click', showNextQuestion);
+            document.getElementById('finishBtn').addEventListener('click', finishTest);
+            document.getElementById('restartBtn').addEventListener('click', restartTest);
+            document.getElementById('reviewBtn').addEventListener('click', startReview);
+            document.getElementById('reviewPrevBtn').addEventListener('click', showPreviousReviewQuestion);
+            document.getElementById('reviewNextBtn').addEventListener('click', showNextReviewQuestion);
+            document.getElementById('reviewBackBtn').addEventListener('click', backToResults);
+        });
+
+        // Отображение выбора тестов
+        function renderTestSelection() {
+            const testSelector = document.getElementById('testSelector');
+            testSelector.innerHTML = '';
+            
+            tests.forEach(test => {
+                const testCard = document.createElement('div');
+                testCard.className = 'test-card pulse';
+                testCard.innerHTML = `
+                    <div class="test-number">${test.id}</div>
+                    <h3>${test.title}</h3>
+                    <p>${test.description}</p>
+                    <button class="start-btn" data-test-id="${test.id}">
+                        <i class="fas fa-play-circle"></i> Начать тест
+                    </button>
+                `;
+                
+                testSelector.appendChild(testCard);
+            });
+            
+            // Назначение обработчиков событий для кнопок начала теста
+            document.querySelectorAll('.start-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const testId = parseInt(this.getAttribute('data-test-id'));
+                    startTest(testId);
+                });
+            });
+        }
+
+        // Начать тест
+        function startTest(testId) {
+            currentTest = tests.find(test => test.id === testId);
+            currentQuestionIndex = 0;
+            userAnswers = new Array(currentTest.questions.length).fill(null);
+            userResults = new Array(currentTest.questions.length).fill(null);
+            
+            // Показать контейнер теста и скрыть выбор тестов
+            document.getElementById('testSelector').style.display = 'none';
+            document.getElementById('testContainer').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('reviewContainer').style.display = 'none';
+            
+            // Установить заголовок теста
+            document.getElementById('testTitle').textContent = currentTest.title;
+            
+            // Обновить статистику
+            updateStats();
+            
+            // Показать первый вопрос
+            showQuestion(currentQuestionIndex);
+        }
+
+        // Показать вопрос
+        function showQuestion(index) {
+            const question = currentTest.questions[index];
+            
+            // Обновить счетчик вопросов
+            document.getElementById('currentQuestion').textContent = index + 1;
+            document.getElementById('totalQuestions').textContent = currentTest.questions.length;
+            
+            // Обновить прогресс-бар
+            const progress = ((index + 1) / currentTest.questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            
+            // Обновить текст вопроса
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Скрыть блок с обратной связью
+            const feedbackElement = document.getElementById('answerFeedback');
+            feedbackElement.style.display = 'none';
+            
+            // Обновить варианты ответов
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
+            
+            question.shuffledVariants.forEach((variant, variantIndex) => {
+                const answerOption = document.createElement('div');
+                answerOption.className = 'answer-option';
+                
+                // Проверяем, был ли уже дан ответ на этот вопрос
+                if (userAnswers[index] !== null) {
+                    // Пользователь уже ответил на этот вопрос
+                    if (userAnswers[index] === variantIndex) {
+                        // Это выбранный пользователем ответ
+                        answerOption.classList.add('selected');
+                        
+                        // Проверяем, правильный ли это ответ
+                        if (variantIndex === question.shuffledCorrect) {
+                            answerOption.classList.add('correct');
+                        } else {
+                            answerOption.classList.add('incorrect');
+                        }
+                    } else if (variantIndex === question.shuffledCorrect) {
+                        // Это правильный ответ (но не выбранный пользователем)
+                        answerOption.classList.add('correct');
+                    }
+                } else {
+                    // Пользователь еще не ответил
+                    if (userAnswers[index] === variantIndex) {
+                        answerOption.classList.add('selected');
+                    }
+                }
+                
+                answerOption.innerHTML = `
+                    <input type="radio" name="answer" id="answer${variantIndex}" value="${variantIndex}" 
+                           ${userAnswers[index] === variantIndex ? 'checked' : ''} 
+                           ${userAnswers[index] !== null ? 'disabled' : ''}>
+                    <label for="answer${variantIndex}">${variant}</label>
+                `;
+                
+                // Добавляем обработчик клика только если ответ еще не дан
+                if (userAnswers[index] === null) {
+                    answerOption.addEventListener('click', function() {
+                        selectAnswer(variantIndex, question);
+                    });
+                }
+                
+                answersContainer.appendChild(answerOption);
+            });
+            
+            // Если пользователь уже ответил на этот вопрос, показываем обратную связь
+            if (userAnswers[index] !== null) {
+                showFeedback(index, question);
+            }
+            
+            // Обновить состояние кнопок навигации
+            document.getElementById('prevBtn').disabled = index === 0;
+            
+            if (index === currentTest.questions.length - 1) {
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('finishBtn').style.display = 'block';
+            } else {
+                document.getElementById('nextBtn').style.display = 'block';
+                document.getElementById('finishBtn').style.display = 'none';
+            }
+            
+            // Активировать кнопку "Следующий" если ответ дан
+            document.getElementById('nextBtn').disabled = userAnswers[index] === null;
+        }
+
+        // Обработка выбора ответа
+        function selectAnswer(selectedIndex, question) {
+            const currentIndex = currentQuestionIndex;
+            
+            // Сохранить ответ пользователя
+            userAnswers[currentIndex] = selectedIndex;
+            
+            // Проверить, правильный ли ответ
+            const isCorrect = selectedIndex === question.shuffledCorrect;
+            userResults[currentIndex] = isCorrect;
+            
+            // Обновить статистику
+            updateStats();
+            
+            // Перерисовать текущий вопрос с выделением правильных/неправильных ответов
+            showQuestion(currentIndex);
+            
+            // Показать обратную связь
+            showFeedback(currentIndex, question);
+            
+            // Активировать кнопку "Следующий"
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        // Показать обратную связь после ответа
+        function showFeedback(index, question) {
+            const feedbackElement = document.getElementById('answerFeedback');
+            const userAnswerIndex = userAnswers[index];
+            const isCorrect = userResults[index];
+            
+            if (userAnswerIndex !== null) {
+                const userAnswer = question.shuffledVariants[userAnswerIndex];
+                const correctAnswer = question.shuffledVariants[question.shuffledCorrect];
+                
+                if (isCorrect) {
+                    feedbackElement.className = 'answer-feedback feedback-correct';
+                    feedbackElement.innerHTML = `
+                        <strong><i class="fas fa-check-circle"></i> Правильно!</strong>
+                        <p>Вы выбрали правильный ответ: "${userAnswer}"</p>
+                    `;
+                } else {
+                    feedbackElement.className = 'answer-feedback feedback-incorrect';
+                    feedbackElement.innerHTML = `
+                        <strong><i class="fas fa-times-circle"></i> Неправильно!</strong>
+                        <p>Вы выбрали: "${userAnswer}"</p>
+                        <p class="correct-answer"><i class="fas fa-lightbulb"></i> Правильный ответ: "${correctAnswer}"</p>
+                    `;
+                }
+                
+                feedbackElement.style.display = 'block';
+            }
+        }
+
+        // Обновить статистику
+        function updateStats() {
+            const answeredCount = userAnswers.filter(answer => answer !== null).length;
+            const correctCount = userResults.filter(result => result === true).length;
+            const incorrectCount = userResults.filter(result => result === false).length;
+            const accuracyRate = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+            
+            document.getElementById('answeredCount').textContent = answeredCount;
+            document.getElementById('correctCountLive').textContent = correctCount;
+            document.getElementById('incorrectCountLive').textContent = incorrectCount;
+            document.getElementById('accuracyRate').textContent = `${accuracyRate}%`;
+        }
+
+        // Показать предыдущий вопрос
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        // Показать следующий вопрос
+        function showNextQuestion() {
+            if (currentQuestionIndex < currentTest.questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        // Завершить тест
+        function finishTest() {
+            // Проверить, все ли вопросы отвечены
+            const unansweredQuestions = userAnswers.filter(answer => answer === null).length;
+            
+            if (unansweredQuestions > 0) {
+                if (!confirm(`Вы ответили не на все вопросы. ${unansweredQuestions} вопросов без ответа. Вы уверены, что хотите завершить тест?`)) {
+                    return;
+                }
+            }
+            
+            // Рассчитать результаты
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let unansweredCount = 0;
+            
+            userResults.forEach(result => {
+                if (result === true) {
+                    correctCount++;
+                } else if (result === false) {
+                    incorrectCount++;
+                } else {
+                    unansweredCount++;
+                }
+            });
+            
+            const percentage = Math.round((correctCount / currentTest.questions.length) * 100);
+            
+            // Показать результаты
+            document.getElementById('testContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            document.getElementById('reviewContainer').style.display = 'none';
+            
+            // Обновить элементы результатов
+            document.getElementById('scoreText').textContent = `${correctCount}/${currentTest.questions.length}`;
+            
+            // Обновить круговую диаграмму
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.style.setProperty('--percentage', `${percentage}%`);
+            
+            // Обновить статистику
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('unansweredCount').textContent = unansweredCount;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+            
+            // Сообщение в зависимости от результата
+            let message = '';
+            if (percentage >= 90) {
+                message = 'Отличный результат! Вы отлично разбираетесь в системном программировании! 🎉';
+            } else if (percentage >= 70) {
+                message = 'Хороший результат! Вы хорошо знаете основы системного программирования. 👍';
+            } else if (percentage >= 50) {
+                message = 'Удовлетворительный результат. Есть что повторить. 📚';
+            } else {
+                message = 'Вам стоит еще раз изучить материалы по системному программированию. 💪';
+            }
+            
+            if (unansweredCount > 0) {
+                message += ` (${unansweredCount} вопросов без ответа)`;
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+        }
+
+        // Начать просмотр ответов
+        function startReview() {
+            reviewQuestionIndex = 0;
+            
+            // Показать контейнер просмотра и скрыть результаты
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('reviewContainer').style.display = 'block';
+            
+            // Установить заголовок
+            document.getElementById('reviewTitle').textContent = `Просмотр ответов: ${currentTest.title}`;
+            
+            // Показать первый вопрос для просмотра
+            showReviewQuestion(reviewQuestionIndex);
+        }
+
+        // Показать вопрос для просмотра
+        function showReviewQuestion(index) {
+            const question = currentTest.questions[index];
+            
+            // Обновить счетчик вопросов
+            document.getElementById('reviewCurrentQuestion').textContent = index + 1;
+            document.getElementById('reviewTotalQuestions').textContent = currentTest.questions.length;
+            
+            // Обновить текст вопроса
+            document.getElementById('reviewQuestionText').textContent = question.question;
+            
+            // Обновить варианты ответов
+            const answersContainer = document.getElementById('reviewAnswersContainer');
+            answersContainer.innerHTML = '';
+            
+            const userAnswerIndex = userAnswers[index];
+            const isCorrect = userResults[index];
+            
+            question.shuffledVariants.forEach((variant, variantIndex) => {
+                const answerOption = document.createElement('div');
+                answerOption.className = 'review-answer-option';
+                
+                // Определяем, как отображать этот вариант ответа
+                let statusIcon = '';
+                let statusClass = '';
+                
+                if (variantIndex === question.shuffledCorrect) {
+                    // Это правильный ответ
+                    statusIcon = '<i class="fas fa-check correct-icon"></i>';
+                    answerOption.classList.add('correct-answer');
+                }
+                
+                if (userAnswerIndex !== null && variantIndex === userAnswerIndex) {
+                    // Это ответ пользователя
+                    answerOption.classList.add('user-selected');
+                    
+                    if (variantIndex !== question.shuffledCorrect) {
+                        // Пользователь выбрал неправильный ответ
+                        statusIcon = '<i class="fas fa-times incorrect-icon"></i>';
+                        answerOption.classList.add('user-incorrect');
+                    }
+                }
+                
+                answerOption.innerHTML = `
+                    <div class="answer-status">${statusIcon}</div>
+                    <div>${variant}</div>
+                `;
+                
+                answersContainer.appendChild(answerOption);
+            });
+            
+            // Обновить состояние кнопок навигации
+            document.getElementById('reviewPrevBtn').disabled = index === 0;
+            document.getElementById('reviewNextBtn').disabled = index === currentTest.questions.length - 1;
+        }
+
+        // Показать предыдущий вопрос для просмотра
+        function showPreviousReviewQuestion() {
+            if (reviewQuestionIndex > 0) {
+                reviewQuestionIndex--;
+                showReviewQuestion(reviewQuestionIndex);
+            }
+        }
+
+        // Показать следующий вопрос для просмотра
+        function showNextReviewQuestion() {
+            if (reviewQuestionIndex < currentTest.questions.length - 1) {
+                reviewQuestionIndex++;
+                showReviewQuestion(reviewQuestionIndex);
+            }
+        }
+
+        // Вернуться к результатам
+        function backToResults() {
+            document.getElementById('reviewContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        // Перезапустить тест (вернуться к выбору тестов)
+        function restartTest() {
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('reviewContainer').style.display = 'none';
+            document.getElementById('testSelector').style.display = 'grid';
+            
+            // Перегенерировать тесты для новых случайных вопросов
+            tests = generateTests();
+            renderTestSelection();
+        }
+    </script>
+</body>
+</html>
